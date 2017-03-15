@@ -16,7 +16,7 @@
       <ul class="sidebar-menu">
         <li class="treeview {{strpos(Request::url(), ' ') ? 'active' : ''}}">
           <a href="#">
-            <i class="fa fa-bullhorn fa-fw"></i> <span>Produtos</span>
+            <i class="fa fa-users fa-fw"></i> <span>Usuários</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -24,7 +24,7 @@
           <ul class="treeview-menu {{strpos(Request::url(), ' ') ? 'menu-open' : ''}}">
             <li><a href=""><i class="fa ion-ios-circle-outline fa-fw text-red"></i>Todos</a></li>
             @if(Auth::check())
-            <li><a href=""><i class="fa ion-ios-circle-outline fa-fw text-red"></i>Meus Produtos</a></li>
+            <li><a href=""><i class="fa ion-ios-circle-outline fa-fw text-red"></i>Meus Usuários</a></li>
             @endif
           </ul>
         </li>
