@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Plataform;
+use App\Models\Platform;
 use Illuminate\Database\Seeder;
 
 class PlatformTableSeeder extends Seeder
@@ -17,6 +17,6 @@ class PlatformTableSeeder extends Seeder
     		,['name' => 'Plataforma Exemplo 2', 'url' => 'plataforma-exemplo-2']
     	];
         
-        Plataform::insert($dataArray);
+        Platform::insert($dataArray);
     }
 }
