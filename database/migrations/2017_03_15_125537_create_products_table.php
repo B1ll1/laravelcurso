@@ -26,6 +26,9 @@ class CreateProductsTable extends Migration
 
             $table->string('name', 100);
             $table->double('price', 15, 2);
+            $table->integer('amount_by_package');
+            $table->integer('package_amount');
+            $table->string('photo');
             $table->text('description', 1000);
 
             $table->timestamps();

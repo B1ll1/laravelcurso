@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
@@ -36,4 +36,15 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+     // Relationships
+    public function platform()
+    {
+        return $this->belongsTo(Platform::class);
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(UserRole::class);
+    }
 }

@@ -25,7 +25,7 @@ class CreateOffersTable extends Migration
             $table->foreign('buyer_id')->references('id')->on('users');
 
             $table->double('total', 15, 2);
-            $table->integer('quantity');
+            $table->integer('amount');
 
             $table->softDeletes();
             $table->timestamps();

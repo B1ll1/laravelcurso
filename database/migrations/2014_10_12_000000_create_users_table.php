@@ -18,6 +18,9 @@ class CreateUsersTable extends Migration
             $table->integer('user_role_id')->unsigned()->nullable();
             $table->foreign('user_role_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
 
+            $table->integer('platform_id')->unsigned()->nullable();
+            $table->foreign('platform_id')->references('id')->on('plataforms')->onDelete('set null')->onUpdate('cascade');
+
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password', 60);
