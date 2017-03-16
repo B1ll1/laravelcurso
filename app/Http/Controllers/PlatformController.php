@@ -87,8 +87,16 @@ class PlatformController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $platformId)
     {
-        //
+        if(!$request->ajax())
+            abort(403);
+
+        $platform = Platform::destroy($platformId);
+
+        if($platform) {
+            return response()->json(['status' => 'success', 'platformId' => $platformId]);
+        }
+        return response()->json(['status' => 'fail', 'platformId' => $platformId]);
     }
 }

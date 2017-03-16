@@ -29,8 +29,12 @@
   <link rel="stylesheet" href="/adminlte/plugins/daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="/adminlte/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  <!-- SweetAlert 2 -->
+  <link rel="stylesheet" href="/assets/libs/sweetalert2/dist/sweetalert2.min.css">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="/assets/libs/toastr/toastr.min.css">
 
-  <!-- Styles -->
+<!-- Styles -->
 <style type="text/css">
   .trunc {
     overflow: hidden !important;
@@ -109,10 +113,15 @@
 
 <!-- AdminLTE App -->
 <script src="/adminlte/dist/js/app.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-{{-- <script src="/adminlte/dist/js/pages/dashboard.js"></script>
-AdminLTE for demo purposes
-<script src="/adminlte/dist/js/demo.js"></script> --}}
+
+<!-- SweetAlert2 -->
+<script src="/assets/libs/es6-promise/es6-promise.auto.min.js"></script>
+<script src="/assets/libs/sweetalert2/dist/sweetalert2.min.js"></script>
+<!-- Toastr -->
+<script src="/assets/libs/toastr/toastr.min.js"></script>
+
+<!-- Custom JS -->
+<script src="/assets/js/custom.js"></script>
 
 @section('specific_scripts')
 @show

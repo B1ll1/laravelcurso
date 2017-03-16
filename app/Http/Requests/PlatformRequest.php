@@ -25,7 +25,7 @@ class PlatformRequest extends Request
     {
         return [
             'name' => 'required|min:2|max:100',
-            'url' => 'required|min:3|max:50'
+            'url'  => 'required|min:3|max:50'
         ];
     }
 
@@ -33,14 +33,11 @@ class PlatformRequest extends Request
     {
         return [
             'name.required' => 'Campo obrigatório.',
-            // 'name.unique' => 'Nome já está em uso, por favor escolha outro.',
-            'name.min' => 'Mínimo de caracteres :min.',
-            'name.max' => 'Máximo de caracteres :max.',
-
-            'url.required' => 'Campo obrigatório.',
-            // 'url.unique' => 'URL já está em uso, por favor escolha outro.',
-            'url.min' => 'Mínimo de caracteres :min.',
-            'url.max' => 'Máximo de caracteres :max.',
+            'name.min'      => 'Mínimo de caracteres :min.',
+            'name.max'      => 'Máximo de caracteres :max.',
+            'url.required'  => 'Campo obrigatório.',
+            'url.min'       => 'Mínimo de caracteres :min.',
+            'url.max'       => 'Máximo de caracteres :max.',
         ];
     }
 }
