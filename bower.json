@@ -1,0 +1,21 @@
+{
+  "name": "laravelcurso",
+  "description": "",
+  "main": "",
+  "authors": [
+    "SantosAdan <santos.adaan@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/B1ll1/laravelcurso",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "sweetalert2": "^6.4.4",
+    "toastr": "^2.1.3"
+  }
+}
