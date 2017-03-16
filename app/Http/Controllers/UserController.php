@@ -2,11 +2,12 @@
 
 namespace Marketplace\Http\Controllers;
 
-use Marketplace\User;
+use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
-use Marketplace\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use Marketplace\Http\Controllers\Controller;
+use Marketplace\Http\Requests;
+use Marketplace\User;
 
 class UserController extends Controller
 {
@@ -124,13 +125,12 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $loggeduser = Auth::user();
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        //foto
+        $inputs = $request->except(['photo']);
+
+        //photo
         $photo = $request->file('photo');
         if(isset($photo)){
-              $user->photo = $user->uploadImage($photo, 'user/');
+              $user->photo = $user->uploadImage($photo, 'users/');
         }
         else{
           $user->photo = 'users/usuario.png';

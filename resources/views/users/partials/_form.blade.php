@@ -54,15 +54,27 @@
     </div><br><br>
 </div>
 
-{--
-<div class="form-group" id="select_tipo_usuario3" style="display: none;">
-    <label class="col-md-3 control-label" id="tipo_usuario3"></label>
+
+<div class="form-group" id="select_user_role_id">
+    <label class="col-md-3 control-label" id="user_role_id"></label>
         <div class="col-md-5 ">
-            <select id="type_id3" class="select_type3 form-control" name="type_id3">
+            <select id="user_role_id" class="select_user_role_id form-control" name="user_role_id">
+                <option disabled selected value> Selecione uma opção </option>
+                <option value="1">Administrador</option>
+                <option value="2">Vendedor</option>
+                <option value="3">Cliente</option>
             </select>
         </div>
 </div>
---}
+
+<div class="form-group" id="select_platform_id" style="display: none;">
+    <label class="col-md-3 control-label" id="platform_id"></label>
+        <div class="col-md-5 ">
+            <select id="platform_id" class="select_platform_id form-control" name="platform_id">
+            </select>
+        </div>
+</div>
+
 <div class="clearfix form-actions">
     <div class="col-md-offset-4 col-md-8">
         <button id="save" class="btn btn-info" type="submit">

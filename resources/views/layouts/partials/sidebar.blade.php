@@ -22,7 +22,7 @@
             </span>
           </a>
           <ul class="treeview-menu {{strpos(Request::url(), ' ') ? 'menu-open' : ''}}">
-            <li><a href=""><i class="fa ion-ios-circle-outline fa-fw text-red"></i>Todos</a></li>
+            <li><a href="{{route('users.index')}}"><i class="fa ion-ios-circle-outline fa-fw text-red"></i>Todos</a></li>
             @if(Auth::check())
             <li><a href=""><i class="fa ion-ios-circle-outline fa-fw text-red"></i>Meus Usuários</a></li>
             @endif

@@ -5,7 +5,7 @@ use Illuminate\Database\Seeder;
 
 class UserRolesTableSeeder extends Seeder
 {
-	private $table = 'user_roles';
+    private $table = 'user_roles';
 
     /**
      * Run the database seeds.

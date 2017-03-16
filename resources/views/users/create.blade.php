@@ -30,13 +30,9 @@
 
 @section('inline_scripts')
    <script>
-         // var user_types_data = $.map(data, function (obj) {
-         //      obj.text = obj.text || obj.name;
-         //      return obj;
-         //  });
-         //  $("#type_id3").select2({
-         //      data: user_types_data
-         //  });
+          $(".select_user_role_id").change(function(){
+            console.log(this)
+          });
     </script>
 
 @stop
