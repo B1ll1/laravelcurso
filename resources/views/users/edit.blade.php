@@ -17,44 +17,16 @@
         </div>
     @endif
 
+    <div class="container-fluid">
+        <hr>
         <div class="row">
-            <div class="col-lg-8 col-md-8 col-xs-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <i class="fa fa-user"></i> {{ $user->name }}<br>
-
-                        @if(!$user->prefecture->isEmpty())
-                            Prefeitura: {{$user->prefecture[0]->name}}
-                       @endif
-
-                       @if(!$user->department->isEmpty())
-                           Prefeitura: {{$user->department[0]->prefecture->name}} <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                           Secretária: {{$user->department[0]->name}}
-
-                       @endif
-                        @if(!$user->sector->isEmpty())
-                           Prefeitura: {{$user->sector[0]->department->prefecture->name}} <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                           Secretária: {{$user->sector[0]->department->name}} <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                           Departamento: {{$user->sector[0]->name}}
-                       @endif
-
-                       @if($user->garage)
-                            Oficina: {{$user->garage->name}}
-                       @endif
-
-
-
-                    </div><!-- /.panel-heading -->
-                    <div class="panel-body">
-                        {!! Form::model($user, ['id' => 'user_update', 'method' => 'PUT',
-                        'route' => ['atualizar_usuario', $user->id], 'class' => 'form-horizontal',
-                        'files' => true]) !!}
-                        @include('users.partials._form')
-                        {!! Form::close() !!}
-                    </div><!-- /.panel-body -->
-                </div><!-- /.panel -->
-            </div><!-- /.col-lg-8 -->
-        </div><!-- /.row -->
+            <div class="col-md-8 col-md-offset-2">
+                {!! Form::model($user, ['route' => ['user.update', $user], 'files' => true]) !!}
+                    @include('users.partials._form')
+                {!! Form::close() !!}
+            </div>
+        </div>
+    </div>
 
     {{-- Modal para alterar senha --}}
         <div id="editPassword" class="modal fade" role="dialog">
@@ -89,7 +61,7 @@
             $.ajax({
                 headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}' },
                 method: 'PATCH',
-                url: '{{ route('atualizar_senha', $user->id) }}',
+                url: '{{ route('user.update_password', $user->id) }}',
                 data: {
                     data: data,
                 },
@@ -98,7 +70,6 @@
             .done(function(data) {
                 if(data.status == 'success') {
                     $('#editPassword').modal('hide');
-
                     swal("", "Senha alterada com sucesso!", "success");
                 }
             });
@@ -114,5 +85,4 @@
 @endsection
 
 @section('specific_scripts')
-  <script src="/assets/select2/js/select2.min.js"></script>
 @endsection

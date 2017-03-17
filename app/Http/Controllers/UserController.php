@@ -1,13 +1,15 @@
 <?php
 
-namespace Marketplace\Http\Controllers;
+namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests;
 use App\Http\Requests\UserRequest;
+use App\Models\User;
+use App\Models\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Marketplace\Http\Controllers\Controller;
-use Marketplace\Http\Requests;
-use Marketplace\User;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -18,90 +20,13 @@ class UserController extends Controller
      */
     public function index()
     {
-      $user = Auth::user();
-      if($user->hasRole('siga')){
-        $users = User::all();
-      }
-      else if($user->hasRole('prefeitura')){
-        $prefecture_id = $user->prefecture->first()->id;
-        $prefecture = Prefecture::find($prefecture_id);
-
-        $userssector = User::join('sector_users', 'users.id', '=', 'sector_users.user_id')
-            ->join('sectors', 'sector_users.sector_id', '=', 'sectors.id')
-            ->join('departments', 'sectors.department_id', '=', 'departments.id')
-            ->where('departments.prefecture_id', '=', $prefecture_id)
-            ->select([
-                  'users.id as id',
-                  'users.name as name',
-                  'users.photo as photo'
-              ]);
-
-         $usersdep = User::join('department_users', 'users.id', '=', 'department_users.user_id')
-            ->join('departments', 'department_users.department_id', '=', 'departments.id')
-            ->where('departments.prefecture_id', '=', $prefecture_id)
-            ->select([
-                  'users.id as id',
-                  'users.name as name',
-                    'users.photo as photo'
-              ]);
-
-        $users = User::join('prefecture_users', 'users.id', '=', 'prefecture_users.user_id')
-            ->where('prefecture_users.prefecture_id', '=', $prefecture_id)
-            ->select([
-                  'users.id as id',
-                  'users.name as name',
-                    'users.photo as photo'
-              ])
-            ->union($userssector)
-            ->union($usersdep)
-            ->get();
-      }
-      else if($user->hasRole('secretaria')){
-        $department_id = $user->department->first()->id;
-
-        $userssector = User::join('sector_users', 'users.id', '=', 'sector_users.user_id')
-            ->join('sectors', 'sector_users.sector_id', '=', 'sectors.id')
-            ->join('departments', 'sectors.department_id', '=', 'departments.id')
-            ->where('departments.id', '=', $department_id)
-            ->select([
-                  'users.id as id',
-                  'users.name as name',
-                  'users.photo as photo'
-              ]);
-
-        $users = User::join('department_users', 'users.id', '=', 'department_users.user_id')
-            ->where('department_users.department_id', '=', $department_id)
-            ->select([
-                    'users.id as id',
-                    'users.name as name',
-                    'users.photo as photo'
-                ])
-            ->union($userssector)
-            ->get();
-
-      }
-      else if($user->hasRole('setor')){
-        $sector_id = $user->sector->first()->id;
-        $users = User::join('sector_users', 'users.id', '=', 'sector_users.user_id')
-            ->join('sectors', 'sector_users.sector_id', '=', 'sectors.id')
-            ->where('sectors.id', '=', $sector_id)
-            ->select([
-                  'users.id as id',
-                  'users.name as name',
-                  'users.photo as photo'
-              ])
-            ->get();
-      }
-      else if($user->hasRole('oficina')){
-        $users = User::join('garages','users.id', '=', 'garages.user_id')
-            ->where('garages.user_id', '=', $user->id)
-            ->select([
-                    'users.id as id',
-                    'users.name as name',
-                    'users.photo as photo'
-                ])
-            ->get();
-      }
+        $user = Auth::user();
+        if($user->user_role_id == 1)
+            $users = User::all();
+        else if($user->user_role_id == 2)
+            $users = User::where('platform_id',$user->platform_id)->get();
+        else
+            return redirect()->route('platform.index');
 
       return view('users.index',compact('users'));
     }
@@ -126,19 +51,27 @@ class UserController extends Controller
     {
         $loggeduser = Auth::user();
         $inputs = $request->except(['photo']);
-
         //photo
         $photo = $request->file('photo');
-        if(isset($photo)){
-              $user->photo = $user->uploadImage($photo, 'users/');
-        }
-        else{
-          $user->photo = 'users/usuario.png';
-        }
-        $user->password = bcrypt($request->password);
-        $user->save();
+        DB::beginTransaction();
+        try{
+            $user=User::create($inputs);
 
-      return redirect()->route('index_usuario');
+            if(isset($photo)){
+                  $user->photo = $user->uploadImage($photo, 'users/');
+            }
+            else{
+              $user->photo = null;
+            }
+            $user->password = bcrypt($request->password);
+            $user->save();
+        }catch(\Exception $e){
+            DB::rollBack();
+        }
+        DB::commit();
+
+
+      return redirect()->route('user.index');
     }
 
     /**
@@ -162,6 +95,10 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $loggeduser = Auth::user();
+        if($user->id == $loggeduser->id)
+            return view('users.edit', compact('user'));
+        else
+            return redirect()->route('platforms.index');
      }
 
     /**
@@ -175,10 +112,21 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
+        $usercheck = User::where('email', $request->email)->first();
 
-        $loggeduser = Auth::user();
+            if(isset($usercheck))
+                if($usercheck->id != $user->id){
+                    \Session::flash('msg_error', $usercheck->email);
+                    return redirect()->route('users.edit', $user->id);
+                }
+                $user->fill($request->except('photo'));
+                if(isset($request['photo'])) {
+                    $photo = $request->file('photo');
+                    $user->photo = $user->uploadImage($photo, 'users/');
+                }
+          $user->save();
 
-        return redirect()->route('editar_usuario', $user->id);
+        return redirect()->route('platform.index', $user->id);
     }
 
     public function updatePassword(Request $request, $userId)
@@ -187,15 +135,22 @@ class UserController extends Controller
             abort(403);
         }
         $user = User::findOrFail($userId);
-        // $role = $user->roles->first();
-        // $loggeduser = Auth::user();
-        $user->password = bcrypt($request['data']);
-        $user->update();
-
-        if($user)
+        $loggeduser = Auth::user();
+        if($user->id==$loggeduser->id){
+            DB::beginTransaction();
+            try{
+                $user->password = bcrypt($request['data']);
+                $user->update();
+            }catch(\Exception $e){
+                DB::rollBack();
+                return response()->json(['status' => 'fail']);
+            }
+            DB::commit();
             return response()->json(['status' => 'success']);
-        else
+        }
+        else{
             return response()->json(['status' => 'fail']);
+        }
     }
 
     /**
@@ -211,16 +166,31 @@ class UserController extends Controller
         }
         $user = User::findOrFail($id);
         $loggeduser = Auth::user();
+        if($loggeduser->user_role_id!=3){
+            if($loggeduser->user_role_id==1){
+                DB::beginTransaction();
+                try{
+                    $user->delete();
+                }catch(\Exception $e){
+                    DB::rollBack();
+                }
+                DB::commit();
+            }
+            else if($loggeduser->user_role_id==2 && ($loggeduser->platform_id==$user->platform_id)){
+                DB::beginTransaction();
+                try{
+                    $user->delete();
+                }catch(\Exception $e){
+                    DB::rollBack();
+                }
+                DB::commit();
+            }
+        }
     }
 
-    public function redirect()
-    {
-        if(Auth::check()){
-            $user  = Auth::user();
-
-        }
-        else{
-            return view('auth.login');
-        }
+    public function ajaxRoles(){
+        $roles = UserRole::all();
+        return $roles;
     }
+
 }

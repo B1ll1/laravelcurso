@@ -58,13 +58,10 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+    @section('header_title')
+    @show
 
-    <section class="content-header">
-      @section('header_title')
-      @show
-    </section>
-      @yield('content')
-
+    @yield('content')
   </div>
   <!-- /.content-wrapper -->
   @include('layouts.partials.footer')

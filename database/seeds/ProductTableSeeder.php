@@ -23,6 +23,8 @@ class ProductTableSeeder extends Seeder
     			,'amount_by_package' => 10
     			,'package_amount' => 5
     			,'photo' => NULL
+                                    ,'created_at' => \Carbon\Carbon::now()->toDateTimeString()
+                                    ,'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
     		]
     		,[
     			'status_id' => 2
@@ -34,6 +36,8 @@ class ProductTableSeeder extends Seeder
     			,'amount_by_package' => 5
     			,'package_amount' => 20
     			,'photo' => NULL
+                                    ,'created_at' => \Carbon\Carbon::now()->toDateTimeString()
+                                    ,'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
     		]
     		,[
     			'status_id' => 3
@@ -45,6 +49,8 @@ class ProductTableSeeder extends Seeder
     			,'amount_by_package' => 50
     			,'package_amount' => 100
     			,'photo' => NULL
+                                    ,'created_at' => \Carbon\Carbon::now()->toDateTimeString()
+                                    ,'updated_at' => \Carbon\Carbon::now()->toDateTimeString()
     		]
     	];
 

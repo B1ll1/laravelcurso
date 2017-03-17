@@ -1,23 +1,18 @@
 @extends('layouts.master')
 
 @section('specific_styles')
-    <link rel="stylesheet" href="/assets/css/jquery-ui-1.10.3.full.min.css" />
 @stop
 
 @section('header_title')
-    <div class="col-md-5 col-xs-4">
-        <div style="clear:both">
-            <b class="page-title"><i class="fa fa-users"></i> Usuário</b>
-            @if(Auth::user()->hasRole(['siga', 'prefeitura']))
-                <div class="align-right">
-                    <a href="{{route('criar_usuario')}}" class="btn btn-sm btn-success">
-                        <i class="fa fa-plus"></i>
-                        Adicionar Usuário
-                    </a>
-                </div>
-            @endif
-        </div>
-    </div>
+    <section class="content-header">
+    <h1>
+        <i class="fa fa-buildin"></i> Usuários
+    </h1>
+
+    <ol class="breadcrumb">
+        <li class="active">Usuários</li>
+    </ol>
+</section>
 @stop
 
 @section('breadcrumb_links')
@@ -28,32 +23,45 @@
 
 
 @section('content')
-    @foreach ($users as $user)
-            <div class="col-md-3 item-list" id="user-{{$user->id}}">
-                <div class="widget">
-                    <div class="widget-head">
-                        <div class="pull-left"><a href="#">{{ $user->name }}</a></div>
-                        <div class="widget-icons pull-right">
-                                <a href="{{route('editar_usuario',[$user->id])}}">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                                @if(Auth::user()->hasRole(['siga', 'prefeitura']))
-                                <a href="#" class="delete-user" data-user-id="{{$user->id}}" data-token="{{ csrf_token() }}">
-                                    <i class="fa fa-remove"></i>
-                                </a>
-                                @endif
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="widget-content">
-                        <a href="#"><div class="item-img cover" style="background-image: url('{{route('images', [$user->photo, 150])}}') ; min-height: 200px"></div></a>
-                        <div class="widget-foot">
-                            <!-- Footer goes here -->
-                        </div>
-                    </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-5 col-md-offset-3 col-xs-12">
+            <a href="{{ route('user.create') }}" class="btn btn-block btn-flat btn-primary">
+                <b>Cadastrar Novo Usuário</b>
+            </a>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        @foreach($users as $user)
+        <div class="col-md-4">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">{{ $user->name }}</h3>
+            </div>
+
+            <div class="box-body no-padding" style="
+                            background-image: url('{{route('images', [$user->photo, 150])}}');
+                            background-size: cover;
+                            background-repeat: no-repeat;
+                            background-position: 50% 50%;
+                            min-height: 120px;
+                ">
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+              <div class="pull-right">
+                <a href="#" class="delete-user" data-user-id="{{$user->id}}" data-token="{{ csrf_token() }}"><i class="fa fa-trash fa-fw" style="font-size:1.3em;"></i></a>
                 </div>
             </div>
-    @endforeach
+          </div>
+          <!-- /.box -->
+        </div>
+        @endforeach
+    </div>
+</div>
 @stop
 
 
