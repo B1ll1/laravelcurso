@@ -64,7 +64,7 @@
   <div class="content-wrapper">
     @section('header_title')
     @show
-    
+
     @yield('content')
   </div>
   <!-- /.content-wrapper -->

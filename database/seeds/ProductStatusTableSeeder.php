@@ -13,11 +13,11 @@ class ProductStatusTableSeeder extends Seeder
     public function run()
     {
     	$dataArray = [
-    		['name' => 'Disponível']
-    		,['name' => 'Estoque Reduzido']
-    		,['name' => 'Esgotado']
+    		['name' => 'Disponível','created_at' => \Carbon\Carbon::now()->toDateTimeString(),'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]
+    		,['name' => 'Estoque Reduzido','created_at' => \Carbon\Carbon::now()->toDateTimeString(),'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]
+    		,['name' => 'Esgotado','created_at' => \Carbon\Carbon::now()->toDateTimeString(),'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]
     	];
-        
+
         ProductStatus::insert($dataArray);
     }
 }

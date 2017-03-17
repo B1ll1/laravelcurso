@@ -13,10 +13,10 @@ class PlatformTableSeeder extends Seeder
     public function run()
     {
     	$dataArray = [
-    		['name' => 'Plataforma Exemplo', 'url' => 'plataforma-exemplo']
-    		,['name' => 'Plataforma Exemplo 2', 'url' => 'plataforma-exemplo-2']
+    		['name' => 'Plataforma Exemplo', 'url' => 'plataforma-exemplo','created_at' => \Carbon\Carbon::now()->toDateTimeString(),'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]
+    		,['name' => 'Plataforma Exemplo 2', 'url' => 'plataforma-exemplo-2','created_at' => \Carbon\Carbon::now()->toDateTimeString(),'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]
     	];
-        
+
         Platform::insert($dataArray);
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Requests\PlatformRequest;
 use App\Models\Platform;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PlatformController extends Controller
 {
@@ -17,7 +18,11 @@ class PlatformController extends Controller
      */
     public function index()
     {
-        $platforms = Platform::all();
+        $user = Auth::user();
+        if($user->user_role_id==1)
+            $platforms = Platform::all();
+        else
+            $platforms = Platform::where('id', $user->platform_id)->get();
 
         return view('platforms.index', compact('platforms'));
     }
@@ -97,5 +102,11 @@ class PlatformController extends Controller
             return response()->json(['status' => 'success', 'platformId' => $platformId]);
         }
         return response()->json(['status' => 'fail', 'platformId' => $platformId]);
+    }
+
+    public function ajaxPlatforms()
+    {
+        $platforms = Platform::all();
+        return $platforms;
     }
 }

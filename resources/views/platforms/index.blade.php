@@ -5,7 +5,7 @@
 	<h1>
 		<i class="fa fa-buildin"></i> Plataformas
 	</h1>
-	
+
 	<ol class="breadcrumb">
 		<li class="active">Plataformas</li>
 	</ol>
@@ -35,6 +35,23 @@
             </div>
           </div>
 
+<<<<<<< HEAD
+            <div class="box-body no-padding" style="
+	                        background-image: url({{-- route('images', [$product->photos->first()->path, 170]) --}});
+	                        background-size: cover;
+	                        background-repeat: no-repeat;
+	                        background-position: 50% 50%;
+	                        min-height: 120px;
+	            ">
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+              <a href="{{---route('products.bycategory', [$product->category->name])--}}"><span class="label label-info pull-left" style="font-size: 0.8em;"><b>/{{ $platform->url }}</b></span></a>
+              <div class="pull-right">
+              	<a href="{{ route('platform.destroy', [$platform->id]) }}"><i class="fa fa-trash fa-fw" style="font-size:1.3em;"></i></a>
+          		</div>
+            </div>
+=======
           <div class="box-body no-padding" style="
                         background-image: url({{-- route('images', [$product->photos->first()->path, 170]) --}});
                         background-size: cover;
@@ -42,6 +59,7 @@
                         background-position: 50% 50%;
                         min-height: 120px;
             ">
+>>>>>>> master
           </div>
           <!-- /.box-body -->
           <div class="box-footer">
@@ -60,8 +78,13 @@
         </div>
         <!-- /.box -->
 	    </div>
+<<<<<<< HEAD
+	    @endforeach
+	</div>
+=======
     @endforeach
 	</div>		
+>>>>>>> master
 </div>
 
 <div id="newPlatformModal" class="modal fade" role="dialog">
