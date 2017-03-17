@@ -59,6 +59,14 @@
           </a>
 
           <ul class="treeview-menu">
+            {{-- @if(Auth::user()->role->id == 1) --}}
+            <li>
+              <a href="{{ route('category.index') }}">
+                <i class="fa fa ion-ios-circle-{{strpos(Request::url(), '/todas') ? 'filled' : 'outline'}} fa-fw text-red"></i>
+                <span>Todas</span>
+              </a>
+            </li>
+            {{-- @endif --}}
             @foreach($categories as $category)
             <li>
               <a href="">

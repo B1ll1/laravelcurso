@@ -4,22 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-use App\Http\Requests\PlatformRequest;
-use App\Models\Platform;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
-class PlatformController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($platformId)
     {
-        $platforms = Platform::all();
+        $products = Product::join('users', 'products.seller_id', '=', 'users.id')
+                            ->join('plataforms', 'users.platform_id', '=', 'plataforms.id')
+                            ->where('plataforms.id', $platformId)->get();
 
-        return view('platforms.index', compact('platforms'));
+        return view('products.index', compact('products'));
     }
 
     /**
@@ -29,7 +30,7 @@ class PlatformController extends Controller
      */
     public function create()
     {
-        return view('platforms.create');
+        return view('products.create');
     }
 
     /**
@@ -38,16 +39,13 @@ class PlatformController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PlatformRequest $request)
+    public function store(Request $request)
     {
         $inputs = $request->all();
 
-        $platform = Platform::create($inputs);
+        Product::create($inputs);
 
-        if($request->ajax()) {
-            return response()->json(['status' => 'success', 'platform' => $platform]);
-        }
-        return redirect()->route('platform.index');
+        return redirect()->route('product.index');
     }
 
     /**
@@ -56,11 +54,11 @@ class PlatformController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($platformId)
+    public function edit($productId)
     {
-        $platform = Platform::findOrFail($platformId);
+        $product = Product::findOrFail($productId);
 
-        return view('platforms.edit', compact('platform'));
+        return view('products.edit', compact('product'));
     }
 
     /**
@@ -70,14 +68,14 @@ class PlatformController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PlatformRequest $request, $platformId)
+    public function update(Request $request, $productId)
     {
-        $platform = Platform::findOrFail($platformId);
+        $product = Product::findOrFail($productId);
         $inputs = $request->all();
 
-        $platform->update($inputs);
+        $product->update($inputs);
 
-        return redirect()->route('platform.index');
+        return redirect()->route('product.index');
     }
 
     /**
@@ -86,16 +84,16 @@ class PlatformController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $platformId)
+    public function destroy(Request $request, $productId)
     {
         if(!$request->ajax())
             abort(403);
 
-        $platform = Platform::destroy($platformId);
+        $product = Product::destroy($productId);
 
-        if($platform) {
-            return response()->json(['status' => 'success', 'platformId' => $platformId]);
+        if($product) {
+            return response()->json(['status' => 'success', 'productId' => $productId]);
         }
-        return response()->json(['status' => 'fail', 'platformId' => $platformId]);
+        return response()->json(['status' => 'fail', 'productId' => $productId]);
     }
 }

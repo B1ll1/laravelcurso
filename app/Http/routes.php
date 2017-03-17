@@ -26,6 +26,26 @@ Route::group(['prefix' => 'plataformas', 'as' => 'platform.'], function() {
     Route::get('{platformId}/editar', ['as' => 'edit', 'uses' => 'PlatformController@edit']);
     Route::post('{platformId}/atualizar', ['as' => 'update', 'uses' => 'PlatformController@update']);
     Route::delete('{platformId}/apagar', ['as' => 'destroy', 'uses' => 'PlatformController@destroy']);
+
+    // Product routes...
+    Route::group(['prefix' => '{platformId}/produtos', 'as' => 'product.'], function() {
+        Route::get('todos', ['as' => 'index', 'uses' => 'ProductController@index']);
+        Route::get('criar', ['as' => 'create', 'uses' => 'ProductController@create']);
+        Route::post('salvar', ['as' => 'store', 'uses' => 'ProductController@store']);
+        Route::get('{productId}/editar', ['as' => 'edit', 'uses' => 'ProductController@edit']);
+        Route::post('{productId}/atualizar', ['as' => 'update', 'uses' => 'ProductController@update']);
+        Route::delete('{productId}/apagar', ['as' => 'destroy', 'uses' => 'ProductController@destroy']);
+    });
+});
+
+// Category routes...
+Route::group(['prefix' => 'categorias', 'as' => 'category.'], function() {
+    Route::get('todas', ['as' => 'index', 'uses' => 'CategoryController@index']);
+    Route::get('criar', ['as' => 'create', 'uses' => 'CategoryController@create']);
+    Route::post('salvar', ['as' => 'store', 'uses' => 'CategoryController@store']);
+    Route::get('{categoryId}/editar', ['as' => 'edit', 'uses' => 'CategoryController@edit']);
+    Route::post('{categoryId}/atualizar', ['as' => 'update', 'uses' => 'CategoryController@update']);
+    Route::delete('{categoryId}/apagar', ['as' => 'destroy', 'uses' => 'CategoryController@destroy']);
 });
 
 Route::group(['middleware' => 'auth' ], function () {

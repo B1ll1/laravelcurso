@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-use App\Http\Requests\PlatformRequest;
-use App\Models\Platform;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class PlatformController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +16,7 @@ class PlatformController extends Controller
      */
     public function index()
     {
-        $platforms = Platform::all();
-
-        return view('platforms.index', compact('platforms'));
+        return view('categories.index');
     }
 
     /**
@@ -29,7 +26,7 @@ class PlatformController extends Controller
      */
     public function create()
     {
-        return view('platforms.create');
+        return view('categories.create');
     }
 
     /**
@@ -38,16 +35,13 @@ class PlatformController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PlatformRequest $request)
+    public function store(Request $request)
     {
         $inputs = $request->all();
 
-        $platform = Platform::create($inputs);
+        Category::create($inputs);
 
-        if($request->ajax()) {
-            return response()->json(['status' => 'success', 'platform' => $platform]);
-        }
-        return redirect()->route('platform.index');
+        return redirect()->route('category.index');
     }
 
     /**
@@ -56,11 +50,11 @@ class PlatformController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($platformId)
+    public function edit($categoryId)
     {
-        $platform = Platform::findOrFail($platformId);
+        $category = Category::findOrFail($categoryId);
 
-        return view('platforms.edit', compact('platform'));
+        return view('categories.edit', compact('category'));
     }
 
     /**
@@ -70,14 +64,14 @@ class PlatformController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PlatformRequest $request, $platformId)
+    public function update(Request $request, $categoryId)
     {
-        $platform = Platform::findOrFail($platformId);
+        $category = Category::findOrFail($categoryId);
         $inputs = $request->all();
 
-        $platform->update($inputs);
+        $category->update($inputs);
 
-        return redirect()->route('platform.index');
+        return redirect()->route('category.index');
     }
 
     /**
@@ -86,16 +80,16 @@ class PlatformController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $platformId)
+    public function destroy(Request $request, $categoryId)
     {
         if(!$request->ajax())
             abort(403);
 
-        $platform = Platform::destroy($platformId);
+        $category = Category::destroy($categoryId);
 
-        if($platform) {
-            return response()->json(['status' => 'success', 'platformId' => $platformId]);
+        if($category) {
+            return response()->json(['status' => 'success', 'categoryId' => $categoryId]);
         }
-        return response()->json(['status' => 'fail', 'platformId' => $platformId]);
+        return response()->json(['status' => 'fail', 'categoryId' => $categoryId]);
     }
 }

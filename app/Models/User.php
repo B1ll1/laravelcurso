@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Traits\ImageUploadTrait;
+//use App\Traits\ImageUploadTrait;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -15,7 +15,7 @@ class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
                                     CanResetPasswordContract
 {
-    use ImageUploadTrait;
+    //use ImageUploadTrait;
     use Authenticatable, Authorizable, CanResetPassword;
 
     /**
