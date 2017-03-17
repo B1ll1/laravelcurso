@@ -21,68 +21,44 @@
         </li>
         @endif
 
-        <li class="treeview {{strpos(Request::url(), 'produtos/categoria') ? 'active' : ''}}">
+        <li class="treeview {{strpos(Request::url(), 'plataformas') ? 'active' : ''}}">
+          <a href="#">
+            <i class="fa fa-building fa-fw"></i> <span>Plataformas</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{strpos(Request::url(), '/todas') ? 'active' : ''}}">
+              <a href="{{ route('platform.index') }}">
+                <i class="fa ion-ios-circle-{{strpos(Request::url(), '/todas') ? 'filled' : 'outline'}} fa-fw text-red"></i>Todas
+              </a>
+            </li>
+            <li class="{{strpos(Request::url(), '/criar') ? 'active' : ''}}">
+              <a href="{{ route('platform.create') }}">
+                <i class="fa ion-ios-circle-{{strpos(Request::url(), '/criar') ? 'filled' : 'outline'}} fa-fw text-red"></i>Nova Plataforma
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="treeview {{strpos(Request::url(), 'categorias') ? 'active' : ''}}">
           <a href="#">
           <i class="fa ion-ios-pricetags fa-fw"></i> <span>Categorias</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left fa-fw pull-right"></i>
             </span>
           </a>
-          <ul class="treeview-menu {{strpos(Request::url(), 'produtos/categoria') ? 'menu-open' : ''}}">
+
+          <ul class="treeview-menu">
+            @foreach($categories as $category)
             <li>
               <a href="">
-                {{-- <i class="fa fa-circle-o fa-fw"></i> --}}
-                <span> Eletrônicos</span>
+                <i class="fa fa ion-ios-circle-{{strpos(Request::url(), '/'.$category->name) ? 'filled' : 'outline'}} fa-fw text-red"></i>
+                <span>{{ $category->name }}</span>
               </a>
             </li>
-            <li>
-              <a href="">
-                {{-- <i class="fa fa-circle-o fa-fw"></i> --}}
-                <span> Esportes</span>
-              </a>
-            </li>
-            <li>
-              <a href="">
-                {{-- <i class="fa fa-circle-o fa-fw"></i> --}}
-                <span> Vestuário</span>
-              </a>
-            </li>
-            <li>
-              <a href="">
-                {{-- <i class="fa fa-circle-o fa-fw"></i> --}}
-                <span class="trunc"> Computadores e Smartphones</span>
-              </a>
-            </li>
-            <li>
-              <a href="">
-                {{-- <i class="fa fa-circle-o fa-fw"></i> --}}
-                <span> Arte e Artesanato</span>
-              </a>
-            </li>
-            <li>
-              <a href="">
-                {{-- <i class="fa fa-circle-o fa-fw"></i> --}}
-                <span> Brinquedos</span>
-              </a>
-            </li>
-            <li>
-              <a href="">
-                {{-- <i class="fa fa-circle-o fa-fw"></i> --}}
-                <span class="trunc"> Livros, Revistas e Quadrinhos</span>
-              </a>
-            </li>
-            <li>
-              <a href="">
-                {{-- <i class="fa fa-circle-o fa-fw"></i> --}}
-                <span> Colecionáveis</span>
-              </a>
-            </li>
-            <li>
-              <a href="">
-                {{-- <i class="fa fa-circle-o fa-fw"></i> --}}
-                <span> Outros</span>
-              </a>
-            </li>
+            @endforeach
           </ul>
         </li>
 

@@ -26,15 +26,16 @@
 
 	<div class="row">
 		@foreach($platforms as $platform)
-	    <div class="col-md-4">
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 class="box-title">{{ $platform->name }}</h3>
-              <div class="pull-right">
-              	<a href="{{ route('platform.edit', [$platform->id]) }}"><i class="fa fa-edit fa-fw" style="font-size:1.3em;"></i></a>
-              </div>
+	    <div class="col-md-4" id="platform-{{$platform->id}}">
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">{{ $platform->name }}</h3>
+            <div class="pull-right">
+            	<a href="{{ route('platform.edit', [$platform->id]) }}"><i class="fa fa-edit fa-fw" style="font-size:1.3em;"></i></a>
             </div>
+          </div>
 
+<<<<<<< HEAD
             <div class="box-body no-padding" style="
 	                        background-image: url({{-- route('images', [$product->photos->first()->path, 170]) --}});
 	                        background-size: cover;
@@ -50,10 +51,77 @@
               	<a href="{{ route('platform.destroy', [$platform->id]) }}"><i class="fa fa-trash fa-fw" style="font-size:1.3em;"></i></a>
           		</div>
             </div>
+=======
+          <div class="box-body no-padding" style="
+                        background-image: url({{-- route('images', [$product->photos->first()->path, 170]) --}});
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                        background-position: 50% 50%;
+                        min-height: 120px;
+            ">
+>>>>>>> master
           </div>
-          <!-- /.box -->
+          <!-- /.box-body -->
+          <div class="box-footer">
+            <a href="{{---route('products.bycategory', [$product->category->name])--}}">
+            	<span class="label label-info pull-left" style="font-size: 0.8em;">
+            		<b>/{{ $platform->url }}</b>
+          		</span>
+          	</a>
+
+            <div class="pull-right">
+            	<a href="#" class="btnDeletePlatform" data-id="{{$platform->id}}">
+            		<i class="fa fa-trash fa-fw" style="font-size:1.3em;"></i>
+        			</a>
+        		</div>	
+          </div>
+        </div>
+        <!-- /.box -->
 	    </div>
+<<<<<<< HEAD
 	    @endforeach
 	</div>
+=======
+    @endforeach
+	</div>		
+>>>>>>> master
 </div>
+@endsection
+
+@section('inline_scripts')
+<script type="text/javascript">
+	$('.btnDeletePlatform').on('click', function(event) {
+		event.preventDefault();
+		var platform_id = $(this).data('id');
+		
+		swal({
+      title: 'Deseja mesmo deletar esta plataforma?',
+      text: 'Essa ação não poderá ser desfeita!',
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Não',
+    }).then(function() {
+        deletePlatform(platform_id);
+    }, function(dismiss) {});
+	});
+
+	function deletePlatform(platform_id) {
+	    $.ajax({
+        headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+        method: 'DELETE',
+        url: '/plataformas/' + platform_id + '/apagar',
+        dataType: 'json'
+	    })
+	    .done(function(data) {
+	      if(data.status == 'success') {
+          $('#platform-'+data.platformId).remove();
+	          flashNotification('Plataforma foi excluída.' ,'success');
+	      }
+	      else {
+	      	flashNotification('Plataforma não foi excluída.' ,'error');
+	      }
+	    });
+	}
+</script>
 @endsection
