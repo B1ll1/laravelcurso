@@ -21,6 +21,15 @@ class AuthController extends Controller
     |
     */
 
+   /**
+     * Where to redirect users after login / registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/plataformas';
+
+    protected $loginPath = '/login';
+
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     /**

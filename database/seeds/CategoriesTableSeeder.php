@@ -13,13 +13,13 @@ class CategoriesTableSeeder extends Seeder
     public function run()
     {
         $dataArray = [
-        	['name' => 'Eletrônicos']
-        	,['name' => 'Cosméticos']
-        	,['name' => 'Vestuário']
-        	,['name' => 'Colecionáveis']
-        	,['name' => 'Calçados']
-        	,['name' => 'Acessórios p/ computadores']
-        	,['name' => 'Computadores e Smartphones']
+        	['name' => 'Eletrônicos','created_at' => \Carbon\Carbon::now()->toDateTimeString(),'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]
+        	,['name' => 'Cosméticos','created_at' => \Carbon\Carbon::now()->toDateTimeString(),'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]
+        	,['name' => 'Vestuário','created_at' => \Carbon\Carbon::now()->toDateTimeString(),'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]
+        	,['name' => 'Colecionáveis','created_at' => \Carbon\Carbon::now()->toDateTimeString(),'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]
+        	,['name' => 'Calçados','created_at' => \Carbon\Carbon::now()->toDateTimeString(),'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]
+        	,['name' => 'Acessórios p/ computadores','created_at' => \Carbon\Carbon::now()->toDateTimeString(),'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]
+        	,['name' => 'Computadores e Smartphones','created_at' => \Carbon\Carbon::now()->toDateTimeString(),'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]
         ];
 
         Category::insert($dataArray);
