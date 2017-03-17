@@ -21,7 +21,6 @@ Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
-
 Route::group(['middleware' => 'auth' ], function () {
     // User routes...
     Route::group(['prefix' => 'usuarios', 'as' => 'user.'], function(){
@@ -44,19 +43,36 @@ Route::group(['middleware' => 'auth' ], function () {
         Route::get('{platformId}/editar', ['as' => 'edit', 'uses' => 'PlatformController@edit']);
         Route::post('{platformId}/atualizar', ['as' => 'update', 'uses' => 'PlatformController@update']);
         Route::post('{platformId}/apagar', ['as' => 'destroy', 'uses' => 'PlatformController@destroy']);
+
+        // Product routes...
+        Route::group(['prefix' => '{platformId}/produtos', 'as' => 'product.'], function() {
+            Route::get('todos', ['as' => 'index', 'uses' => 'ProductController@index']);
+            Route::get('criar', ['as' => 'create', 'uses' => 'ProductController@create']);
+            Route::post('salvar', ['as' => 'store', 'uses' => 'ProductController@store']);
+            Route::get('{productId}/editar', ['as' => 'edit', 'uses' => 'ProductController@edit']);
+            Route::post('{productId}/atualizar', ['as' => 'update', 'uses' => 'ProductController@update']);
+            Route::delete('{productId}/apagar', ['as' => 'destroy', 'uses' => 'ProductController@destroy']);
+        });
     });
 
-      /*
-      * Images Route
-      */
-        Route::get('/images/{folder}/{image?}/{size?}', ['as' => 'images', 'uses' => function($folder, $image, $size) {
-            $path = storage_path() . '/app/' . $folder . '/' . $image;
-            $img = Image::make($path)->resize(null, $size, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            return $img->response();
-        }]);
+    // Category routes...
+    Route::group(['prefix' => 'categorias', 'as' => 'category.'], function() {
+        Route::get('todas', ['as' => 'index', 'uses' => 'CategoryController@index']);
+        Route::get('criar', ['as' => 'create', 'uses' => 'CategoryController@create']);
+        Route::post('salvar', ['as' => 'store', 'uses' => 'CategoryController@store']);
+        Route::get('{categoryId}/editar', ['as' => 'edit', 'uses' => 'CategoryController@edit']);
+        Route::post('{categoryId}/atualizar', ['as' => 'update', 'uses' => 'CategoryController@update']);
+        Route::delete('{categoryId}/apagar', ['as' => 'destroy', 'uses' => 'CategoryController@destroy']);
+    });
 
+    // Images Route...
+    Route::get('/images/{folder}/{image?}/{size?}', ['as' => 'images', 'uses' => function($folder, $image, $size) {
+        $path = storage_path() . '/app/' . $folder . '/' . $image;
+        $img = Image::make($path)->resize(null, $size, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        return $img->response();
+    }]);
 });
 
 

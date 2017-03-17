@@ -49,10 +49,9 @@ class PlatformController extends Controller
 
         $platform = Platform::create($inputs);
 
-        if(!$platform) {
-            // Lógica para exibir erro
+        if($request->ajax()) {
+            return response()->json(['status' => 'success', 'platform' => $platform]);
         }
-
         return redirect()->route('platform.index');
     }
 
