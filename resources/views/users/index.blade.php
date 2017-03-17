@@ -36,7 +36,7 @@
 
     <div class="row">
         @foreach($users as $user)
-        <div class="col-md-4">
+        <div class="col-md-4" id="user-{{$user->id}}">
           <div class="box box-primary">
             <div class="box-header with-border">
               <h3 class="box-title">{{ $user->name }}</h3>
@@ -75,41 +75,31 @@
         });
 
         function deleteUser(user_id, token) {
+
             swal({
                 title: "Deseja mesmo deletar este usuário?",
                 text: "Não será possível reverter essa operação.",
                 type: "warning",
                 showCancelButton: true,
                 cancelButtonText: "Cancelar",
-                closeOnConfirm: false,
                 confirmButtonText: "Sim, deletar!",
                 confirmButtonColor: "#DD6B55"
-            }, function() {
+            }).then(function() {
                 $.ajax({
                             headers: { 'X-CSRF-TOKEN': $('.delete-user').attr("data-token") },
-                            url: "/siga/usuario/" + user_id + "/deletar",
+                            url: "/usuarios/" + user_id + "/deletar",
                             type: "post",
                             data: [user_id, token]
                         })
-                        .done(function() {
-                            swal({
-                                title: "Deletado!",
-                                text: "O usuário foi deletado com sucesso.",
-                                type: "success",
-                                confirmButtonText: "Ok"
-                            }, function() {
-                                setTimeout(function() { location.reload(1);}, 500);
-                            });
-                        }).error(function() {
-                    swal({
-                        title: "Erro",
-                        text: "O usuário não pode ser deletado.",
-                        type: "error",
-                        confirmButtonText: "Ok"
-                    }, function() {
-                        location.reload();
-                    });
-                });
+                        .done(function(data) {
+                            if(data.status == 'success') {
+                              $('#user-'+data.userId).remove();
+                                  flashNotification('Usuário foi excluído.' ,'success');
+                              }
+                              else {
+                                flashNotification('Usuário não excluído.' ,'error');
+                              }
+                        });
             });
         }
 

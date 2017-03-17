@@ -173,8 +173,10 @@ class UserController extends Controller
                     $user->delete();
                 }catch(\Exception $e){
                     DB::rollBack();
+                    return response()->json(['status' => 'fail', 'userId' => $user->id]);
                 }
                 DB::commit();
+                return response()->json(['status' => 'success', 'userId' => $user->id]);
             }
             else if($loggeduser->user_role_id==2 && ($loggeduser->platform_id==$user->platform_id)){
                 DB::beginTransaction();
@@ -182,10 +184,13 @@ class UserController extends Controller
                     $user->delete();
                 }catch(\Exception $e){
                     DB::rollBack();
+                    return response()->json(['status' => 'fail', 'userId' => $user->id]);
                 }
                 DB::commit();
+                return response()->json(['status' => 'success', 'userId' => $user->id]);
             }
         }
+        return response()->json(['status' => 'fail', 'userId' => $user->id]);
     }
 
     public function ajaxRoles(){
