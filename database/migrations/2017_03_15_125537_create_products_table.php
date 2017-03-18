@@ -24,6 +24,9 @@ class CreateProductsTable extends Migration
             $table->integer('seller_id')->unsigned();
             $table->foreign('seller_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
+            $table->integer('platform_id')->unsigned();
+            $table->foreign('platform_id')->references('id')->on('plataforms')->onDelete('cascade')->onUpdate('cascade');
+
             $table->string('name', 100);
             $table->double('price', 15, 2);
             $table->integer('amount_by_package');

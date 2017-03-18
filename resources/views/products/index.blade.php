@@ -16,7 +16,7 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-md-5 col-md-offset-3 col-xs-12">
-			<a href="{{-- route('product.create', [Auth::user()->platform->id]) --}}" class="btn btn-block btn-flat btn-primary">
+			<a href="{{ route('platform.product.create', [$platformId]) }}" class="btn btn-block btn-flat btn-primary">
 				<b>Cadastrar Novo Produtos</b>
 			</a>
 		</div>
@@ -31,7 +31,7 @@
         <div class="box-header with-border">
           <h3 class="box-title">{{ $product->name }}</h3>
           <div class="pull-right">
-            <a href="{{-- route('product.edit', [Auth::user()->platform->id, $product->id]) --}}"><i class="fa fa-edit fa-fw" style="font-size:1.3em;"></i></a>
+            <a href="{{ route('platform.product.edit', [$platformId, $product->id]) }}"><i class="fa fa-edit fa-fw" style="font-size:1.3em;"></i></a>
             <a href="#" class="btnDeleteproduct" data-id="{{$product->id}}">
               <i class="fa fa-trash fa-fw" style="font-size:1.3em;"></i>
             </a>
@@ -39,7 +39,7 @@
         </div>
 
         <div class="box-body no-padding" style="
-                      background-image: url({{-- route('images', [$product->photos->first()->path, 170]) --}});
+                      background-image: url({{ $product->photo != NULL ? route('images', [$product->photo, 170]) : '/product_default.jpg'}});
                       background-size: cover;
                       background-repeat: no-repeat;
                       background-position: 50% 50%;

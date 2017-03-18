@@ -15,6 +15,7 @@ class Product extends Model
         'category_id',
         'seller_id',
         'status_id',
+        'platform_id',
         'name',
         'price',
         'photo',
@@ -42,5 +43,10 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function platform()
+    {
+        return $this->belongsTo(Platform::class);
     }
 }
