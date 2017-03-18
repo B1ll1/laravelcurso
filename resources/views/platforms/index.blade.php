@@ -36,7 +36,7 @@
           </div>
 
           <div class="box-body no-padding" style="
-                        background-image: url({{-- route('images', [$product->photos->first()->path, 170]) --}});
+                        background-image: url('product_default.jpg');
                         background-size: cover;
                         background-repeat: no-repeat;
                         background-position: 50% 50%;
@@ -56,13 +56,14 @@
             	<a href="#" class="btnDeletePlatform" data-id="{{$platform->id}}">
             		<i class="fa fa-trash fa-fw" style="font-size:1.3em;"></i>
         			</a>
-        		</div>	
+        		</div>
           </div>
         </div>
         <!-- /.box -->
 	    </div>
       @endforeach
 	</div>
+
 </div>
 
 <div id="newPlatformModal" class="modal fade" role="dialog">
@@ -104,7 +105,7 @@
 	$(document).on('click', '.btnDeletePlatform', function(event) {
 		event.preventDefault();
 		var platform_id = $(this).data('id');
-		
+
 		swal({
       title: 'Deseja mesmo deletar esta plataforma?',
       text: 'Essa ação não poderá ser desfeita!',
