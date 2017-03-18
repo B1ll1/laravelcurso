@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Models\Product;
+use App\Models\ProductStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -16,11 +18,9 @@ class ProductController extends Controller
      */
     public function index($platformId)
     {
-        $products = Product::join('users', 'products.seller_id', '=', 'users.id')
-                            ->join('plataforms', 'users.platform_id', '=', 'plataforms.id')
-                            ->where('plataforms.id', $platformId)->get();
+        $products = Product::where('platform_id', $platformId)->get();
 
-        return view('products.index', compact('products'));
+        return view('products.index', compact('products', 'platformId'));
     }
 
     /**
@@ -28,9 +28,9 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($platformId)
     {
-        return view('products.create');
+        return view('products.create', compact('platformId'));
     }
 
     /**
@@ -39,13 +39,18 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $platformId)
     {
+        $available = 1;
+
         $inputs = $request->all();
+        $inputs['seller_id']   = Auth::user()->id;
+        $inputs['platform_id'] = Auth::user()->user_role_id == 1 ? $platformId : Auth::user()->platform->id;
+        $inputs['status_id'] = $available;
 
         Product::create($inputs);
 
-        return redirect()->route('product.index');
+        return redirect()->route('platform.product.index', [$platformId]);
     }
 
     /**
@@ -54,11 +59,12 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($productId)
+    public function edit($platformId, $productId)
     {
         $product = Product::findOrFail($productId);
+        $productStatus = ProductStatus::all();
 
-        return view('products.edit', compact('product'));
+        return view('products.edit', compact('product', 'productStatus', 'platformId'));
     }
 
     /**
@@ -68,14 +74,14 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $productId)
+    public function update(Request $request, $platformId, $productId)
     {
         $product = Product::findOrFail($productId);
         $inputs = $request->all();
 
         $product->update($inputs);
 
-        return redirect()->route('product.index');
+        return redirect()->route('platform.product.index', [$platformId]);
     }
 
     /**

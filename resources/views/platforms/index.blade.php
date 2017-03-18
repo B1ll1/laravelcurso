@@ -34,10 +34,19 @@
             	<a href="{{ route('platform.edit', [$platform->id]) }}"><i class="fa fa-edit fa-fw" style="font-size:1.3em;"></i></a>
             </div>
           </div>
+
+          <div class="box-body no-padding" style="
+                        background-image: url('product_default.jpg');
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                        background-position: 50% 50%;
+                        min-height: 120px;
+            ">
           </div>
+
           <!-- /.box-body -->
           <div class="box-footer">
-            <a href="{{---route('products.bycategory', [$product->category->name])--}}">
+            <a href="{{ route('platform.product.index', [$platform->id])}}">
             	<span class="label label-info pull-left" style="font-size: 0.8em;">
             		<b>/{{ $platform->url }}</b>
           		</span>
@@ -52,6 +61,9 @@
         </div>
         <!-- /.box -->
 	    </div>
+      @endforeach
+	</div>
+
 </div>
 
 <div id="newPlatformModal" class="modal fade" role="dialog">

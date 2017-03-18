@@ -17,6 +17,7 @@ class ProductTableSeeder extends Seeder
     			'status_id' => 1
     			,'category_id' => 1
     			,'seller_id' => 2
+                ,'platform_id' => 1
     			,'name' => 'Notebook XYZ'
     			,'description' => 'Notebook da marca XYZ, 16GB RAM'
     			,'price' => 2500.00
@@ -30,6 +31,7 @@ class ProductTableSeeder extends Seeder
     			'status_id' => 2
     			,'category_id' => 4
     			,'seller_id' => 2
+                ,'platform_id' => 1
     			,'name' => 'Action Figure Batman'
     			,'description' => 'Action Figure do Batman - Cavaleiro das Trevas'
     			,'price' => 300.00
@@ -43,6 +45,7 @@ class ProductTableSeeder extends Seeder
     			'status_id' => 3
     			,'category_id' => 2
     			,'seller_id' => 2
+                ,'platform_id' => 2
     			,'name' => 'Maquiagem Maneira'
     			,'description' => 'Maquiagem famosa mais maneira de todas'
     			,'price' => 45.99

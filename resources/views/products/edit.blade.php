@@ -3,12 +3,12 @@
 @section('header_title')
 <section class="content-header">
 	<h1>
-		<i class="fa fa-buildin"></i> Editando Categoria
+		<i class="fa fa-buildin"></i> Editando Produto
 	</h1>
 	
 	<ol class="breadcrumb">
-		<li><a href="{{ route('category.index') }}"><i class="fa fa-tag fa-fw"></i>Categorias</a></li>
-		<li class="active">Editando Categoria</li>
+		<li><a href="{{ route('platform.product.index', [$product->platform->id]) }}"><i class="fa fa-tag fa-fw"></i>Produtos</a></li>
+		<li class="active">Editando Produto</li>
 	</ol>
 </section>
 @stop
@@ -18,8 +18,8 @@
 	<hr>
 	<div class="row">
 		<div class="col-md-8 col-md-offset-2">
-			{!! Form::model($category, ['route' => ['category.update', $category->id], 'class' => '']) !!}
-				@include('categories.partials._form')
+			{!! Form::model($product, ['route' => ['platform.product.update', $product->platform->id, $product->id], 'class' => '']) !!}
+				@include('products.partials._form')
 			{!! Form::close() !!}
 		</div>
 	</div>
